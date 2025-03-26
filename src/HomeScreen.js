@@ -21,27 +21,38 @@ const HomeScreen = () => {
       if(settings.Formula=="1")
       {
         const last5char=text.slice(-5);
-        let url = `http://snackboss-iot.in:8080/calculate?calculateNumber=${last5char}`;
-        
+        const hexValue = last5char;
+        console.log('Received calculateNumber:', hexValue);
+      
+        if (!hexValue) {
+          return;
+        }
+      
+        // Step 1: Convert hex to decimal
+        const initialDecimal = parseInt(hexValue, 16);
+      
+        if (isNaN(initialDecimal)) {
+          return;
+        }
+      
+        // Step 2: Divide by 2
+        const dividedDecimal = Math.floor(initialDecimal / 2);
+      
+        // Step 3: Get last 4 hex digits
+        const hexAfterDivide = dividedDecimal.toString(16); // e.g., '11911'
+        const last4HexDigits = hexAfterDivide.slice(-4);    // e.g., '1911'
+      
+        // Step 4: Convert last 4 hex digits to decimal
+        const finalDecimal = parseInt(last4HexDigits, 16);
+        const value = finalDecimal % 65536;
+
+      
+          
+        const url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${value}`;
         setUpdateText(url);
         setTimeout(()=>{
-        fetch(url)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.text();
-        })
-        .then((responseText) => {
-          try {
-            const jsonResponse = JSON.parse(responseText);
-            setUpdateText(JSON.stringify(jsonResponse, null, 2));
-            var value=JSON.stringify(jsonResponse, null, 2);
-            url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${value}`;
-      setUpdateText(url);
-      setTimeout(()=>{
-      setUpdateText("Fetching data..."); // Show a loading message
-    
+        setUpdateText("Fetching data..."); // Show a loading message
+      
      
 
       fetch(url)
@@ -64,18 +75,39 @@ const HomeScreen = () => {
           setUpdateText(`Error: ${err.message}`);
         });
       },2000);
-          } catch (error) {
-            setUpdateText(responseText);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          setUpdateText(`Error: ${err.message}`);
-        });
-      },2000);
-
+         
       
     
+    }
+    else{
+      const url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${text}`;
+      setUpdateText(url);
+      setTimeout(()=>{
+      setUpdateText("Fetching data..."); // Show a loading message
+    
+   
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.text();
+      })
+      .then((responseText) => {
+        try {
+          const jsonResponse = JSON.parse(responseText);
+          setUpdateText(JSON.stringify(jsonResponse, null, 2));
+        } catch (error) {
+          setUpdateText(responseText);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setUpdateText(`Error: ${err.message}`);
+      });
+    },2000);
+
     }
     }
   }, [text]);
