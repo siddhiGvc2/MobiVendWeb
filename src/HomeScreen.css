@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .settings-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .input {
+    height: 50px;
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .response-container {
+    padding: 10px;
+    border: 1px solid thistle;
+    border-radius: 10px;
+    width: 80%;
+    min-height: 50px;
+    text-align: center;
+  }
+  
+  .response-text {
+    font-size: 26px;
+    white-space: pre-wrap;
+  }
+  
