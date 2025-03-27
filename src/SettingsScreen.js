@@ -1,34 +1,30 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSettings } from "./SettingsContext"; // Import useSettings
 import { Link } from "react-router-dom";
 
 const SettingsScreen = () => {
-  const { settings, setSettings } = useSettings(); // Destructure setSettings
+  const { settings, setSettings } = useSettings(); // Access settings & update function
 
+  // Handle input changes
   const handleChange = (e) => {
-    setSettings((prevSettings) => ({
-      ...prevSettings,
-      [e.target.name]: e.target.value,
-    }));
-  
-    setTimeout(() => {
-      if (e.target.name === "Formula" && e.target.value === "1") {
-        console.log("Formula is 1");
-        setSettings((prevSettings) => ({
-          ...prevSettings,
-          MinLength: "24",
-          Formula: "1",
-        }));
+    const { name, value } = e.target;
+
+    setSettings((prevSettings) => {
+      const newSettings = { ...prevSettings, [name]: value };
+
+      // If Formula is set to "1", force MinLength to "24"
+      if (name === "Formula" && value === "1") {
+        newSettings.MinLength = "24";
       }
-    }, 100);
+
+      return newSettings;
+    });
   };
 
-    useEffect(() => {
-      localStorage.setItem("app_settings", JSON.stringify(settings));
-    }, [settings]);
-
-    
+  // Ensure settings persist in IndexedDB
+  useEffect(() => {
+    console.log("Settings updated:", settings);
+  }, [settings]);
 
   return (
     <div style={styles.container}>
@@ -50,6 +46,7 @@ const SettingsScreen = () => {
         value={settings.MinLength}
         onChange={handleChange}
         style={styles.input}
+       
       />
 
       <label>API:</label>
