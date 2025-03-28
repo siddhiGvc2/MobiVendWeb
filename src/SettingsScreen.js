@@ -40,6 +40,16 @@ const SettingsScreen = () => {
       />
 
       <label>Minimum Length:</label>
+        {/* <select 
+          name="MinLength" 
+          value={settings.MinLength} 
+          onChange={handleChange} 
+          style={styles.input}
+        >
+        <option value="">Select an option</option>
+        <option value="1">HID</option>
+        <option value="2">BAR CODE READER</option>
+      </select> */}
       <input
         type="number"
         name="MinLength"
@@ -74,6 +84,7 @@ const SettingsScreen = () => {
 
 const styles = {
   container: {
+    
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -81,6 +92,7 @@ const styles = {
     height: "100vh",
   },
   input: {
+    width:'50%',
     fontSize: "18px",
     padding: "8px",
     margin: "5px 0",
