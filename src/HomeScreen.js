@@ -11,15 +11,29 @@ const HomeScreen = () => {
   const [typingTimeout, setTypingTimeout] = useState(null);
 
   const handleChange = (value) => {
+    let length=0;
+    if(settings.MinLength=="1")
+    {
+      length=8;
+    }
+    else if(settings.MinLength=="2"){
+      length=24;
+    }
     setText(value);
 
     // Clear previous timeout and set a new one
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
-
+   
     const newTimeout = setTimeout(() => {
+      if(value.length>=length)
+      {
       callApi(value);
+      }
+      else{
+        setUpdateText(`Minimum Length should ${length}`);
+      }
     }, settings.Timeout ? parseInt(settings.Timeout) * 1000 : 2000); // Default 2s if no timeout is set
 
     setTypingTimeout(newTimeout);

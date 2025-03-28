@@ -39,7 +39,7 @@ const SettingsScreen = () => {
         style={styles.input}
       />
 
-      {/* <label>Minimum Length:</label>
+      <label style={styles.label}>Minimum Length:</label>
       <select 
         name="MinLength" 
         value={settings.MinLength} 
@@ -49,7 +49,7 @@ const SettingsScreen = () => {
         <option value="">Select an option</option>
         <option value="1">BAR CODE</option>
         <option value="2">HID</option>
-      </select> */}
+      </select>
       {/* <input
         type="number"
         name="MinLength"
