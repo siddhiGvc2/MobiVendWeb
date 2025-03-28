@@ -16,7 +16,7 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    if (text.length !== parseInt(settings.MinLength, 10)) return;
+    if (text.length < parseInt(settings.MinLength, 10)) return;
 
     let cardNumber = text;
     let url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${cardNumber}`;
@@ -34,7 +34,7 @@ const HomeScreen = () => {
 
       url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${cardNumber}`;
     }
-
+    setText("");
     setUpdateText(url);
     setTimeout(() => {
       setUpdateText("Fetching data...");
