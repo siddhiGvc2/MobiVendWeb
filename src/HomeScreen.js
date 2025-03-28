@@ -46,26 +46,14 @@ const HomeScreen = () => {
         })
         .then((responseText) => {
           try {
-            setText("");
             setUpdateText(JSON.stringify(JSON.parse(responseText), null, 2));
-            setTimeout(()=>{
-              setUpdateText("");
-            },5000)
           } catch {
-            setText("");
             setUpdateText(responseText);
-            setTimeout(()=>{
-              setUpdateText("");
-            },5000)
           }
         })
         .catch((err) => {
           console.error(err);
-          setText("");
           setUpdateText(`Error: ${err.message}`);
-          setTimeout(()=>{
-            setUpdateText("");
-          },5000)
         });
     }, 2000);
   }, [text, settings]);
