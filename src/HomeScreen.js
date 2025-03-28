@@ -4,42 +4,34 @@ import { useSettings } from "./SettingsContext"; // Import useSettings
 import "./HomeScreen.css"; // Import CSS file
 
 const HomeScreen = () => {
-  const navigate = useNavigate(); // For navigation
-  const { settings } = useSettings(); // Access global settings
+  const navigate = useNavigate();
+  const { settings } = useSettings();
   const [text, setText] = useState("");
   const [updateText, setUpdateText] = useState("");
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
   const handleChange = (value) => {
-    let length=0;
-    if(settings.MinLength=="1")
-    {
-      length=8;
+    setText(value);
+
+    // Clear previous timeout and set a new one
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
     }
-    else{
-      length=24;
-    }
-    if (value.length <= length) {
-      setText(value);
-    }
+
+    const newTimeout = setTimeout(() => {
+      callApi(value);
+    }, settings.Timeout ? parseInt(settings.Timeout) * 1000 : 2000); // Default 2s if no timeout is set
+
+    setTypingTimeout(newTimeout);
   };
 
-  useEffect(() => {
-    let length=0;
-    if(settings.MinLength=="1")
-    {
-      length=8;
-    }
-    else{
-      length=24;
-    }
-  
-    if (text.length < length) return;
+  const callApi = (cardNumber) => {
+    if (!cardNumber) return; // Don't call API if input is empty
 
-    let cardNumber = text;
     let url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${cardNumber}`;
 
     if (settings.Formula === "1") {
-      const last5char = text.slice(-5);
+      const last5char = cardNumber.slice(-5);
       console.log("Received calculateNumber:", last5char);
 
       const initialDecimal = parseInt(last5char, 16);
@@ -53,27 +45,32 @@ const HomeScreen = () => {
     }
     setText("");
     setUpdateText(url);
-    setTimeout(() => {
-      setUpdateText("Fetching data...");
+    setTimeout(()=>{
+    setUpdateText("Fetching data...");
 
-      fetch(url)
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-          return res.text();
-        })
-        .then((responseText) => {
-          try {
-            setUpdateText(JSON.stringify(JSON.parse(responseText), null, 2));
-          } catch {
-            setUpdateText(responseText);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          setUpdateText(`Error: ${err.message}`);
-        });
-    }, 2000);
-  }, [text, settings]);
+    const fetchTimeout = setTimeout(() => {
+      setUpdateText("offline");
+    }, 5000); // 5 seconds timeout
+
+    fetch(url)
+      .then((res) => {
+        clearTimeout(fetchTimeout);
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        return res.text();
+      })
+      .then((responseText) => {
+        try {
+          setUpdateText(JSON.stringify(JSON.parse(responseText), null, 2));
+        } catch {
+          setUpdateText(responseText);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setUpdateText(`Error: ${err.message}`);
+      });
+    },2000)
+  };
 
   return (
     <div className="container">

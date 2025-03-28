@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #2c3e50, #3498db); /* Gradient from dark blue to light blue */
     height: 100vh;
     padding: 20px;
   }
@@ -15,6 +16,7 @@
     background: none;
     border: none;
     cursor: pointer;
+    color:white
   }
   
   .input {
@@ -40,5 +42,6 @@
   .response-text {
     font-size: 26px;
     white-space: pre-wrap;
+    color:#ccc
   }
   

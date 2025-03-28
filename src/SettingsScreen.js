@@ -28,9 +28,9 @@ const SettingsScreen = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Settings</h2>
+      <h2 style={styles.label}>Settings</h2>
 
-      <label>Unit Number:</label>
+      <label style={styles.label}>Unit Number:</label>
       <input
         type="text"
         name="UnitNumber"
@@ -39,7 +39,7 @@ const SettingsScreen = () => {
         style={styles.input}
       />
 
-      <label>Minimum Length:</label>
+      {/* <label>Minimum Length:</label>
       <select 
         name="MinLength" 
         value={settings.MinLength} 
@@ -49,7 +49,7 @@ const SettingsScreen = () => {
         <option value="">Select an option</option>
         <option value="1">BAR CODE</option>
         <option value="2">HID</option>
-      </select>
+      </select> */}
       {/* <input
         type="number"
         name="MinLength"
@@ -59,16 +59,16 @@ const SettingsScreen = () => {
        
       /> */}
 
-      <label>API:</label>
+      {/* <label>API:</label>
       <input
         type="text"
         name="Api"
         value={settings.Api}
         onChange={handleChange}
         style={styles.input}
-      />
+      /> */}
 
-      <label>Formula:</label>
+      <label style={styles.label}>Formula:</label>
       <input
         type="text"
         name="Formula"
@@ -84,13 +84,21 @@ const SettingsScreen = () => {
 
 const styles = {
   container: {
+  
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
+    background: "linear-gradient(135deg, #2c3e50, #3498db)", // Corrected (no semicolon)
+  },
+  label:{
+    color:'#ccc'
   },
   input: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     fontSize: "18px",
     padding: "8px",
     margin: "5px 0",
