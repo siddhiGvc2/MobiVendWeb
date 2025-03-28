@@ -10,13 +10,30 @@ const HomeScreen = () => {
   const [updateText, setUpdateText] = useState("");
 
   const handleChange = (value) => {
-    if (value.length <= parseInt(settings.MinLength, 10)) {
+    let length=0;
+    if(settings.MinLength=="1")
+    {
+      length=8;
+    }
+    else{
+      length=24;
+    }
+    if (value.length <= length) {
       setText(value);
     }
   };
 
   useEffect(() => {
-    if (text.length < parseInt(settings.MinLength, 10)) return;
+    let length=0;
+    if(settings.MinLength=="1")
+    {
+      length=8;
+    }
+    else{
+      length=24;
+    }
+  
+    if (text.length < length) return;
 
     let cardNumber = text;
     let url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${cardNumber}`;

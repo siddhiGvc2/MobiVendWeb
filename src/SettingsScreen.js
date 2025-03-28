@@ -14,7 +14,7 @@ const SettingsScreen = () => {
 
       // If Formula is set to "1", force MinLength to "24"
       if (name === "Formula" && value === "1") {
-        newSettings.MinLength = "24";
+        newSettings.MinLength = "2";
       }
 
       return newSettings;
@@ -40,14 +40,24 @@ const SettingsScreen = () => {
       />
 
       <label>Minimum Length:</label>
-      <input
+      <select 
+        name="MinLength" 
+        value={settings.MinLength} 
+        onChange={handleChange} 
+        style={styles.input}
+      >
+        <option value="">Select an option</option>
+        <option value="1">BAR CODE</option>
+        <option value="2">HID</option>
+      </select>
+      {/* <input
         type="number"
         name="MinLength"
         value={settings.MinLength}
         onChange={handleChange}
         style={styles.input}
        
-      />
+      /> */}
 
       <label>API:</label>
       <input
