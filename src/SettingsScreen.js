@@ -13,8 +13,11 @@ const SettingsScreen = () => {
       const newSettings = { ...prevSettings, [name]: value };
 
       // If Formula is set to "1", force MinLength to "24"
-      if (name === "Formula" && value === "1") {
-        newSettings.MinLength = "2";
+      if (name === "MinLength" && value === "2") {
+        newSettings.Formula = "1";
+      }
+      else if(name === "MinLength" && value === "1"){
+        newSettings.Formula = "";
       }
 
       return newSettings;
@@ -68,14 +71,14 @@ const SettingsScreen = () => {
         style={styles.input}
       /> */}
 
-      <label style={styles.label}>Formula:</label>
+      {/* <label style={styles.label}>Formula:</label>
       <input
         type="text"
         name="Formula"
         value={settings.Formula}
         onChange={handleChange}
         style={styles.input}
-      />
+      /> */}
 
       <Link to="/" style={styles.button}>Save & Go Back</Link>
     </div>
