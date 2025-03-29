@@ -34,7 +34,7 @@ const HomeScreen = () => {
       else{
         setUpdateText(`Minimum Length should ${length}`);
       }
-    }, settings.Timeout ? parseInt(settings.Timeout) * 1000 : 2000); // Default 2s if no timeout is set
+    }, settings.Timeout ? parseInt(settings.Timeout) * 1000 : 1200); // Default 2s if no timeout is set
 
     setTypingTimeout(newTimeout);
   };
