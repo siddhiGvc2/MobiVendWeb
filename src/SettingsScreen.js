@@ -13,7 +13,7 @@ const SettingsScreen = () => {
       const newSettings = { ...prevSettings, [name]: value };
 
       // If Formula is set to "1", force MinLength to "24"
-      if (name === "MinLength" && value === "2") {
+      if (name === "MinLength" && (value === "2" || value=="3")) {
         newSettings.Formula = "1";
       }
       else if(name === "MinLength" && value === "1"){
@@ -51,7 +51,8 @@ const SettingsScreen = () => {
       >
         <option value="">Select an option</option>
         <option value="1">BAR CODE</option>
-        <option value="2">HID</option>
+        <option value="2">HID ORIGINAL</option>
+        <option value="3">HID 5 DIGIT</option>
       </select>
       {/* <input
         type="number"
