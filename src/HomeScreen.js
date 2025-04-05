@@ -49,13 +49,16 @@ const HomeScreen = () => {
       console.log("Received calculateNumber:", last5char);
 
       const initialDecimal = parseInt(last5char, 16);
+      let  formattedCardNumber;
       if (!isNaN(initialDecimal)) {
         const dividedDecimal = Math.floor(initialDecimal / 2);
         const last4HexDigits = dividedDecimal.toString(16).slice(-4);
         cardNumber = parseInt(last4HexDigits, 16) % 65536;
+        formattedCardNumber = cardNumber.toString().padStart(5, '0');
+        console.log(formattedCardNumber); 
       }
 
-      url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${cardNumber}`;
+      url = `https://mobivend.in/rfid/scan?location_id=${settings.UnitNumber}&card_no=${formattedCardNumber}`;
     }
     setText("");
     setUpdateText(url);
