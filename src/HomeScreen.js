@@ -16,7 +16,7 @@ const HomeScreen = () => {
     {
       length=8;
     }
-    else if(settings.MinLength=="2"){
+    else if(settings.MinLength=="2" || settings.MinLength=="3"){
       length=24;
     }
     setText(value);
